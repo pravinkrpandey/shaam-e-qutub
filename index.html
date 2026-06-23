@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shaam-e-Qutub — Group Booking | IndiaPinned</title>
+<meta name="description" content="Book Shaam-e-Qutub, a guided evening heritage walk at Qutub Minar. ₹600 per person — calculate your group total and reserve instantly.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --midnight:#1A1714;
+    --gold:#EF9F27;
+    --saffron:#D85A30;
+    --ivory:#F7F5F2;
+    --ivory-dim:#ece6da;
+    --line:#3a3128;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Inter',sans-serif;
+    background:var(--midnight);
+    color:var(--ivory);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .serif{font-family:'Playfair Display',serif;}
+  a{color:inherit;}
+  img{display:block;max-width:100%;}
+
+  /* ---------- POSTER HERO ---------- */
+  .poster-wrap{
+    max-width:900px;
+    margin:0 auto;
+  }
+  .poster-wrap img{width:100%;display:block;}
+
+  /* ---------- OVERVIEW BANNER ---------- */
+  .overview{
+    max-width:760px;
+    margin:0 auto;
+    padding:4.5rem 6vw 1rem;
+    text-align:center;
+  }
+  .overview-head h1{
+    font-size:clamp(1.7rem, 3.6vw, 2.5rem);
+    font-weight:700;
+    margin-top:.6rem;
+    margin-bottom:3rem;
+  }
+  .overview-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:1.4rem;
+  }
+  .overview-item{
+    background:rgba(247,245,242,.05);
+    border:1px solid rgba(247,245,242,.12);
+    border-radius:6px;
+    padding:1.8rem 1.3rem;
+    position:relative;
+  }
+  .overview-num{
+    display:block;
+    font-size:1.6rem;
+    font-style:italic;
+    color:var(--gold);
+    margin-bottom:.6rem;
+  }
+  .overview-item h4{
+    font-size:1rem;
+    font-weight:700;
+    margin-bottom:.5rem;
+  }
+  .overview-item p{
+    font-size:.84rem;
+    color:#c9c2b6;
+  }
+  .overview-item:not(:last-child)::after{
+    content:"→";
+    position:absolute;
+    top:50%;
+    right:-1.1rem;
+    transform:translateY(-50%);
+    color:var(--gold);
+    font-size:1.1rem;
+    opacity:.7;
+  }
+
+  /* ---------- CALCULATOR SECTION ---------- */
+  .calc-section{
+    padding:4rem 6vw 1rem;
+    max-width:560px;
+    margin:0 auto;
+  }
+  .section-head{
+    text-align:center;
+    margin-bottom:2.6rem;
+  }
+  .eyebrow{
+    font-size:.78rem;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--gold);
+    font-weight:600;
+    margin-bottom:.8rem;
+  }
+  .eyebrow::before{content:"— ";}
+  .section-head h2{
+    font-size:clamp(1.5rem, 3vw, 2rem);
+    font-weight:600;
+  }
+
+  .calc-card{
+    background:rgba(247,245,242,.05);
+    border:1px solid rgba(247,245,242,.15);
+    border-radius:6px;
+    padding:2.2rem 2rem;
+  }
+  .calc-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:1.6rem;
+  }
+  .calc-row label{
+    font-size:.95rem;
+    color:var(--ivory);
+  }
+  .stepper{
+    display:flex;
+    align-items:center;
+    gap:0;
+    border:1px solid rgba(247,245,242,.25);
+    border-radius:4px;
+    overflow:hidden;
+  }
+  .stepper button{
+    background:rgba(247,245,242,.08);
+    border:none;
+    color:var(--ivory);
+    width:42px;height:42px;
+    font-size:1.2rem;
+    cursor:pointer;
+    transition:background .15s ease;
+  }
+  .stepper button:hover{background:var(--saffron);}
+  .stepper input{
+    width:56px;
+    text-align:center;
+    background:transparent;
+    border:none;
+    color:var(--ivory);
+    font-family:'Playfair Display',serif;
+    font-weight:600;
+    font-size:1.15rem;
+    -moz-appearance:textfield;
+  }
+  .stepper input::-webkit-outer-spin-button,
+  .stepper input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
+
+  .calc-divider{
+    border-top:1px dashed rgba(247,245,242,.2);
+    margin:1.6rem 0;
+  }
+  .calc-total{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+  }
+  .calc-total .label{
+    font-size:.85rem;
+    color:#c9c2b6;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+  }
+  .calc-total .amount{
+    font-family:'Playfair Display',serif;
+    font-style:italic;
+    font-weight:600;
+    font-size:2.2rem;
+    color:var(--gold);
+  }
+  .calc-note{
+    font-size:.8rem;
+    color:#9a9286;
+    margin-top:.5rem;
+    text-align:right;
+  }
+
+  /* ---------- FORM SECTION ---------- */
+  .form-section{
+    max-width:560px;
+    margin:3.5rem auto 0;
+    padding:0 6vw;
+  }
+  .form-card{
+    background:rgba(247,245,242,.05);
+    border:1px solid rgba(247,245,242,.15);
+    border-radius:6px;
+    padding:2.2rem 2rem;
+    text-align:center;
+  }
+  .form-card p{
+    font-size:.92rem;
+    color:#c9c2b6;
+    margin-bottom:1.6rem;
+    max-width:42ch;
+    margin-left:auto;
+    margin-right:auto;
+  }
+  .form-btn{
+    display:inline-block;
+    background:transparent;
+    border:1.5px solid var(--gold);
+    color:var(--gold);
+    font-weight:600;
+    font-size:.95rem;
+    padding:.85rem 1.8rem;
+    border-radius:4px;
+    text-decoration:none;
+    transition:background .15s ease, color .15s ease;
+  }
+  .form-btn:hover{background:var(--gold);color:var(--midnight);}
+
+  /* ---------- PAYMENT SECTION ---------- */
+  .pay-section{
+    max-width:560px;
+    margin:2.4rem auto 0;
+    padding:0 6vw;
+  }
+  .pay-card{
+    background:var(--saffron);
+    border-radius:6px;
+    padding:2.4rem 2rem;
+    text-align:center;
+  }
+  .pay-card .eyebrow{color:var(--midnight);opacity:.75;}
+  .pay-card h3{
+    font-size:1.4rem;
+    margin-bottom:.3rem;
+  }
+  .pay-card .pay-amount{
+    font-family:'Playfair Display',serif;
+    font-style:italic;
+    font-weight:600;
+    font-size:2rem;
+    margin-bottom:1.6rem;
+  }
+  .cta-btn{
+    display:block;
+    width:100%;
+    text-align:center;
+    background:var(--midnight);
+    color:var(--ivory);
+    font-weight:700;
+    font-size:1rem;
+    padding:1.05rem 1.4rem;
+    border-radius:4px;
+    text-decoration:none;
+    letter-spacing:.02em;
+    transition:transform .15s ease, opacity .15s ease;
+  }
+  .cta-btn:hover{opacity:.85;transform:translateY(-1px);}
+  .pay-note{
+    font-size:.82rem;
+    margin-top:1rem;
+    opacity:.85;
+  }
+  .pay-note strong{font-weight:700;}
+
+  .alt-contact{
+    text-align:center;
+    margin:2rem auto 0;
+    font-size:.88rem;
+    color:#c9c2b6;
+    max-width:560px;
+    padding:0 6vw;
+  }
+  .alt-contact a{
+    color:var(--gold);
+    text-decoration:underline;
+    font-weight:600;
+  }
+
+  /* ---------- STEPS GUIDE ---------- */
+  .steps{
+    max-width:560px;
+    margin:3.5rem auto 0;
+    padding:0 6vw;
+  }
+  .steps h3{
+    text-align:center;
+    font-size:1.05rem;
+    color:#c9c2b6;
+    margin-bottom:1.4rem;
+    font-weight:600;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+  }
+  .step-item{
+    display:flex;
+    gap:1rem;
+    padding:.9rem 0;
+    border-bottom:1px solid rgba(247,245,242,.1);
+    font-size:.9rem;
+  }
+  .step-item:last-child{border-bottom:none;}
+  .step-num{
+    font-family:'Playfair Display',serif;
+    font-style:italic;
+    color:var(--gold);
+    font-size:1rem;
+    flex-shrink:0;
+  }
+  .step-item p{color:#c9c2b6;}
+
+  /* ---------- FOOTER ---------- */
+  .footer{
+    text-align:center;
+    padding:4rem 6vw 2.6rem;
+    margin-top:2rem;
+  }
+  .footer .credential{
+    font-size:.85rem;
+    max-width:50ch;
+    margin:0 auto 1.4rem;
+    color:#9a9286;
+    line-height:1.7;
+  }
+  .footer .credential strong{color:var(--gold);font-weight:600;}
+  .footer .brandline{
+    font-family:'Playfair Display',serif;
+    font-style:italic;
+    font-size:.9rem;
+    color:#6e6759;
+  }
+
+  @media (max-width:480px){
+    .calc-card,.form-card{padding:1.8rem 1.4rem;}
+  }
+  @media (max-width:640px){
+    .overview-grid{grid-template-columns:1fr;gap:1.8rem;}
+    .overview-item:not(:last-child)::after{
+      content:"↓";
+      top:auto;
+      bottom:-1.5rem;
+      right:50%;
+      left:auto;
+      transform:translateX(50%);
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="poster-wrap">
+  <img src="hero.jpg" alt="Shaam-e-Qutub evening heritage walk poster">
+</div>
+
+<!-- BOOKING OVERVIEW BANNER -->
+<section class="overview">
+  <div class="overview-head">
+    <div class="eyebrow" style="justify-content:center;display:flex;">Book Shaam-e-Qutub</div>
+    <h1 class="serif">Reserve your walk in 3 easy steps</h1>
+  </div>
+  <div class="overview-grid">
+    <div class="overview-item">
+      <span class="overview-num serif">01</span>
+      <h4>Count your group</h4>
+      <p>Tell us how many people, see your total instantly.</p>
+    </div>
+    <div class="overview-item">
+      <span class="overview-num serif">02</span>
+      <h4>Pay securely</h4>
+      <p>Pay the exact amount via Razorpay — pre-filled for you.</p>
+    </div>
+    <div class="overview-item">
+      <span class="overview-num serif">03</span>
+      <h4>Confirm your booking</h4>
+      <p>Share your details and Payment ID — you're done.</p>
+    </div>
+  </div>
+</section>
+
+<!-- STEP 1: CALCULATOR -->
+<section class="calc-section">
+  <div class="section-head">
+    <div class="eyebrow">Step 1</div>
+    <h2 class="serif">How many in your group?</h2>
+  </div>
+  <div class="calc-card">
+    <div class="calc-row">
+      <label for="people">Number of people</label>
+      <div class="stepper">
+        <button type="button" id="minus" aria-label="Decrease">−</button>
+        <input type="number" id="people" value="1" min="1" max="50">
+        <button type="button" id="plus" aria-label="Increase">+</button>
+      </div>
+    </div>
+    <div class="calc-divider"></div>
+    <div class="calc-total">
+      <span class="label">Total amount</span>
+      <span class="amount" id="total">₹600</span>
+    </div>
+    <div class="calc-note">₹600 × <span id="count-echo">1</span> person</div>
+  </div>
+</section>
+
+<!-- STEP 2: PAYMENT -->
+<section class="pay-section">
+  <div class="section-head">
+    <div class="eyebrow">Step 2</div>
+    <h2 class="serif">Pay securely</h2>
+  </div>
+  <div class="pay-card">
+    <div class="pay-amount" id="pay-amount">₹600</div>
+    <a class="cta-btn" id="pay-btn" href="https://pages.razorpay.com/pl_T4jFyrxGL63lrN/view?amount=600" target="_blank" rel="noopener">Pay on Razorpay</a>
+    <p class="pay-note">Your total is pre-filled automatically — just confirm and pay.</p>
+    <p class="pay-note"><strong>After paying, note your Payment ID</strong> — Razorpay shows it on the success screen (starts with "pay_"). You'll need it in Step 3.</p>
+  </div>
+</section>
+
+<!-- STEP 3: FORM -->
+<section class="form-section">
+  <div class="section-head">
+    <div class="eyebrow">Step 3</div>
+    <h2 class="serif">Confirm your booking</h2>
+  </div>
+  <div class="form-card">
+    <p>Share your name, mobile, email, group size, and the Payment ID from Step 2. Takes under a minute.</p>
+    <a class="form-btn" href="https://docs.google.com/forms/d/e/1FAIpQLSc6_vBdsM5d5IBDWIECCAQKGou1R5odLDXzl7QXMQnXf-FQsA/viewform?usp=header" target="_blank" rel="noopener">Open Booking Form →</a>
+  </div>
+</section>
+
+
+<div class="alt-contact">
+  Questions before booking? <a href="https://wa.me/919311109240" target="_blank" rel="noopener">Message on WhatsApp</a>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="steps">
+  <h3>How booking works</h3>
+  <div class="step-item">
+    <span class="step-num serif">01</span>
+    <p>Use the calculator above to see your total based on group size.</p>
+  </div>
+  <div class="step-item">
+    <span class="step-num serif">02</span>
+    <p>Pay the exact total via the Razorpay button — note your Payment ID.</p>
+  </div>
+  <div class="step-item">
+    <span class="step-num serif">03</span>
+    <p>Fill the short booking form with your details and Payment ID.</p>
+  </div>
+  <div class="step-item">
+    <span class="step-num serif">04</span>
+    <p>You'll receive confirmation on WhatsApp before the walk.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p class="credential">
+    Led by <strong>Pravin Kr Pandey</strong>, a Government of India Licensed Heritage Guide with 14 years of experience, who has guided official delegations at the <strong>G20 Summit</strong>, <strong>UNESCO World Heritage Committee</strong>, and the <strong>AI Summit</strong> — all held in India.
+  </p>
+  <p class="brandline">IndiaPinned · Golden Triangle Tours — Drop a pin. Start a story.</p>
+</footer>
+
+<script>
+  const peopleInput = document.getElementById('people');
+  const totalEl = document.getElementById('total');
+  const payAmountEl = document.getElementById('pay-amount');
+  const countEcho = document.getElementById('count-echo');
+  const payBtn = document.getElementById('pay-btn');
+  const PRICE = 600;
+  const RAZORPAY_BASE = 'https://pages.razorpay.com/pl_T4jFyrxGL63lrN/view';
+
+  function updateTotal(){
+    let n = parseInt(peopleInput.value, 10);
+    if(isNaN(n) || n < 1) n = 1;
+    if(n > 50) n = 50;
+    peopleInput.value = n;
+    const total = n * PRICE;
+    totalEl.textContent = '₹' + total.toLocaleString('en-IN');
+    payAmountEl.textContent = '₹' + total.toLocaleString('en-IN');
+    countEcho.textContent = n;
+    payBtn.href = RAZORPAY_BASE + '?amount=' + total;
+  }
+
+  document.getElementById('minus').addEventListener('click', () => {
+    peopleInput.value = Math.max(1, parseInt(peopleInput.value, 10) - 1);
+    updateTotal();
+  });
+  document.getElementById('plus').addEventListener('click', () => {
+    peopleInput.value = Math.min(50, parseInt(peopleInput.value, 10) + 1);
+    updateTotal();
+  });
+  peopleInput.addEventListener('input', updateTotal);
+  updateTotal();
+</script>
+
+</body>
+</html>
